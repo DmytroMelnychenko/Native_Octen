@@ -12,6 +12,7 @@ import React, {type PropsWithChildren, useState} from 'react';
 import {
   Button,
   FlatList,
+  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -31,133 +32,25 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
-  const [users, setUsers] = useState<any[]>([]);
-  const [posts, setPosts] = useState<any[]>([]);
-  const renderPost = ({item, index}: {item: any; index: number}) => {
-    return (
-      <Text key={`item-${index}`}>
-        {index + 1} - {item.title}
-      </Text>
-    );
-  };
-  console.log(users, 'users');
   return (
     <SafeAreaView>
-      <View style={styles.perentForHeader}>
-        <View style={styles.headerSection}>
-          <View style={styles.headerItem}>
-            {!users.length ? (
-              <Button
-                title={'Get users'}
-                onPress={() => {
-                  fetch('https://jsonplaceholder.typicode.com/users')
-                    .then(resp => resp.json())
-                    .then(json => setUsers(json));
-                }}
-              />
-            ) : (
-              <Button
-                title="Hide users"
-                onPress={() => {
-                  setUsers([]);
-                }}
-              />
-            )}
-          </View>
-          {!!users.length && <Text style={styles.title}>Users</Text>}
-        </View>
-        {!!users.length &&
-          users.map((item, index) => {
-            return (
-              <Text key={`item-${index}`}>
-                {item.name} --- {item.username}
-              </Text>
-            );
-          })}
-      </View>
       <View>
-        <View style={styles.perentForHeader}>
-          <View style={styles.headerSection}>
-            <View style={styles.headerItem}>
-              {!posts.length ? (
-                <Button
-                  title={'Get Posts'}
-                  onPress={() => {
-                    fetch('https://jsonplaceholder.typicode.com/posts')
-                      .then(resp => resp.json())
-                      .then(json => setPosts(json));
-                  }}
-                />
-              ) : (
-                <Button
-                  title="Hide Posts"
-                  onPress={() => {
-                    setPosts([]);
-                  }}
-                />
-              )}
-            </View>
-            {!!posts.length && <Text style={styles.title}>Users</Text>}
-          </View>
-          <View style={styles.flatlist}>
-            {!!posts.length && (
-              <FlatList data={posts} renderItem={renderPost} />
-            )}
-          </View>
-        </View>
-        {!!users.length && !!posts.length && (
-          <View style={styles.bottomButtonBlock}>
-            <TouchableOpacity
-              style={styles.buttonBlock}
-              onLongPress={() => {
-                setPosts([]);
-                setUsers([]);
-              }}>
-              <Text style={styles.buttonText}>Hide all</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        <Image
+          style={styles.image}
+          source={{
+            uri: 'https://image.shutterstock.com/image-photo/mountains-under-mist-morning-amazing-260nw-1725825019.jpg',
+          }}
+        />
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  perentForHeader: {
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    paddingHorizontal: 15,
-  },
-  headerSection: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  headerItem: {
-    width: '40%',
-    alignItems: 'flex-start',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  flatlist: {
-    height: 400,
-  },
-  bottomButtonBlock: {
-    marginTop: 25,
-    paddingHorizontal: 20,
-  },
-  buttonBlock: {
-    alignItems: 'center',
-    paddingTop: 20,
-    padding: 20,
-    backgroundColor: '#64A6FA',
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: '400',
-    color: '#fff',
+  image: {
+    width: 400,
+    height: 700,
+    opacity: 0.3,
   },
 });
 
